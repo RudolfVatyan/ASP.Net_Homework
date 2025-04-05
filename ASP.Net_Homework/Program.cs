@@ -1,3 +1,5 @@
+using ASP.Net_Homework.Repositories.Interfaces;
+using ASP.Net_Homework.Repositories.Services;   
 
 namespace ASP.Net_Homework
 {
@@ -14,15 +16,20 @@ namespace ASP.Net_Homework
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHttpClient();
+            builder.Services.Configure<PostsApiSettings>(builder.Configuration.GetSection("PostsApiSettings"));
+            builder.Services.Configure<UsersApiSettings>(builder.Configuration.GetSection("UsersApiSettings"));
+            builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            builder.Services.AddScoped<IPostRepository, PostService>();
+            builder.Services.AddScoped<IUserRepository, UserService>();
+
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+           
+            app.UseSwagger();
+            app.UseSwaggerUI();
+           
 
             app.UseHttpsRedirection();
 
