@@ -16,10 +16,10 @@ namespace ASP.Net_Homework.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> Get()
         {
             var users = await _userRepository.GetUsers();
-            if (users == null || !users.Any())
+            if (users == null)
                 return NotFound();
 
             return Ok(users);

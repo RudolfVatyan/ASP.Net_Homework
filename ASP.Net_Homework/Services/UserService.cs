@@ -28,24 +28,26 @@ namespace ASP.Net_Homework.Repositories.Services
             return null;
         }
 
-        public async Task<User> GetUser(int userId)
+        public async Task<UserResponse> GetUser(int userId)
         {
             var url = $"{_baseUrl}/api/users/{userId}";
             var response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<User>();
+                var userResponse = await response.Content.ReadFromJsonAsync<UserResponse>();
+                return userResponse;
             }
             return null;
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<UserListResponse> GetUsers()
         {
             var url = $"{_baseUrl}/api/users";
             var response = await _httpClient.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<IEnumerable<User>>();
+                var userListResponse = await response.Content.ReadFromJsonAsync<UserListResponse>();
+                return userListResponse;
             }
             return null;
         }
